@@ -6,8 +6,8 @@ services:
     image: mongo
     ports:
       - '27017:27017'
-    # networks:
-    #   - lunch-app
+    networks:
+      - lunch-app
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${INITDB_ROOT_PASSWORD}
@@ -17,16 +17,16 @@ services:
     volumes:
       - ./data:/data/db
       - ./db-init.sh:/docker-entrypoint-initdb.d/db-init.sh:ro
-#   web:
-#     image: web
-#     depends_on:
-#       - db
-#     ports:
-#       - '3000:3000'
-#       - '5000:5000'
-#     networks:
-#       - lunch-app
+  web:
+    image: web
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+      - '5000:5000'
+    networks:
+      - lunch-app
 
-# networks:
-#   lunch-app:
-#     driver: bridge
+networks:
+  lunch-app:
+    driver: bridge
